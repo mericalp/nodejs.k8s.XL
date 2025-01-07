@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: mericalpp/mern-todo-frontend:v2
+        env:
+        - name: DANGEROUSLY_DISABLE_HOST_CHECK
+          value: "true"
+        - name: WDS_SOCKET_PORT
+          value: "0"
+        ports:
+        - containerPort: 3000
+     
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3000
+    targetPort: 3000
+  selector:
+    app: frontend

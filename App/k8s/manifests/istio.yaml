@@ -1,0 +1,29 @@
+
+YAML
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  labels:
+    app: backend
+  annotations:
+    sidecar.istio.io/inject: "true"
+spec:
+  profile: default
+  components:
+    egressGateways:
+    - name: istio-egressgateway
+      enabled: true
+    ingressGateways:
+    - name: istio-ingressgateway
+      enabled: true
+  values:
+    global:
+      proxy:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 2000m
+            memory: 1024Mi

@@ -80,3 +80,4 @@ echo -e "\nNGINX Logs:"
 kubectl logs -l app=nginx-proxy --tail=20
 
 echo -e "\nPress Ctrl+C to stop the script..."
+

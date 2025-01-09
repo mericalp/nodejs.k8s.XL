@@ -1,0 +1,21 @@
+# /opt/App/monitoring/prometheus/rules/alert-rules.yaml
+groups:
+- name: mern-todo-alerts
+  rules:
+  - alert: HighCPUUsage
+    expr: container_cpu_usage_seconds_total{container!=""} > 0.8
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: High CPU usage detected
+      description: Container {{ $labels.container }} CPU usage is above 80%
+
+  - alert: PodCrashLooping
+    expr: kube_pod_container_status_restarts_total > 5
+    for: 15m
+    labels:
+      severity: critical
+    annotations:
+      summary: Pod is crash looping
+      description: Pod {{ $labels.pod }} is restarting frequently
